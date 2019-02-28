@@ -27,7 +27,7 @@ def feggholder(x):
     :return:
     """
     return -(x[1]+47.0)*np.sin(np.sqrt(np.fabs(x[0]/2.0 + x[1] + 47.0))) -\
-           x[0]*np.sin(np.sqrt(np.fabs(x[0] - (x[1] + 47.0)))) + 1000.0
+        x[0]*np.sin(np.sqrt(np.fabs(x[0] - (x[1] + 47.0)))) + 1000.0
 
 
 def fsphere(x):
@@ -45,4 +45,5 @@ def frosenn(x):
     :param x:
     :return:
     """
-    return sum([100*(x[i+1]-x[i]**2)**2 + (1-x[i])**2 for i in range(len(x)-1)])
+    return sum([100*(x[i+1]-x[i]**2)**2 + (1-x[i])**2
+                for i in range(len(x)-1)])

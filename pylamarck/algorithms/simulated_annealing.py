@@ -38,8 +38,10 @@ class SimulatedAnnealing(SearchAlgorithm):
                     best_ind = new_ind
             else:
                 temperature = self.temperature_schedule(time)
-                # we need to check if temperature is greater than 0 to avoid division by zero in the second condition
-                if temperature > 1e-10 and random.uniform(0.0, 1.0) < math.exp(-delta_e/temperature):
+                # we need to check if temperature is greater than 0
+                # to avoid division by zero in the second condition
+                if temperature > 1e-10 and random.uniform(0.0, 1.0) < \
+                        math.exp(-delta_e/temperature):
                     cur_ind = new_ind
 
             time += 1

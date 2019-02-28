@@ -17,10 +17,12 @@ class RandomCities:
         def get_coord():
             return random.uniform(rand_min, rand_max)
 
-        self._cities = [City(get_coord(), get_coord(), f"C-{i}") for i in range(n)]
+        self._cities = [City(get_coord(), get_coord(), f"C-{i}")
+                        for i in range(n)]
 
     def dist(self, i, j):
-        return math.sqrt((self._cities[i].x - self._cities[j].x)**2 + (self._cities[i].y - self._cities[j].y)**2)
+        return math.sqrt((self._cities[i].x - self._cities[j].x)**2 +
+                         (self._cities[i].y - self._cities[j].y)**2)
 
     def __call__(self, perm):
         dist = 0.0
@@ -77,7 +79,9 @@ class SwapElementsMove(TabuMove):
 
 def tsp_swap_neighbourhood(x):
     n = len(x.g)
-    return [SwapElementsMove(i, j) for i in range(n) for j in range(n) if i != j]
+    return [SwapElementsMove(i, j)
+            for i in range(n)
+            for j in range(n) if i != j]
 
 
 class ReversePartMove(TabuMove):

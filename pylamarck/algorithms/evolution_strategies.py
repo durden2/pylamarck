@@ -4,7 +4,8 @@ from pylamarck.production import BinarySearchOperation
 
 
 class EvolutionStrategy(SearchAlgorithm):
-    def __init__(self, mu_param, lambda_param, mode, nso, uso, term, evaluator=ObjectiveEvaluator(), gpm=lambda x: x):
+    def __init__(self, mu_param, lambda_param, mode, nso, uso, term,
+                 evaluator=ObjectiveEvaluator(), gpm=lambda x: x):
         """
 
         :param mu_param:
@@ -27,10 +28,19 @@ class EvolutionStrategy(SearchAlgorithm):
             preserve_parents = False
         else:
             preserve_parents = True
-        reproducer = RandomReproducer(lambda_param, uso, BinarySearchOperation(), 1.0, preserve_parents)
+        reproducer = RandomReproducer(lambda_param,
+                                      uso,
+                                      BinarySearchOperation(),
+                                      1.0,
+                                      preserve_parents)
 
-        self.search = Evolutionary(nso=nso, reproducer=reproducer, selector=TruncationSelection(mu_param), term=term,
-                                   n0=self.mu_param, evaluator=evaluator, gpm=gpm)
+        self.search = Evolutionary(nso=nso,
+                                   reproducer=reproducer,
+                                   selector=TruncationSelection(mu_param),
+                                   term=term,
+                                   n0=self.mu_param,
+                                   evaluator=evaluator,
+                                   gpm=gpm)
 
     def solve(self, f):
         return self.search.solve(f)

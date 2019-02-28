@@ -30,7 +30,8 @@ def bresenham(n, m):
     return [i * n // m + n // (2 * m) for i in range(m)]
 
 
-def convergence_demo2d(logs, f, mincoord, maxcoord, contour_logspace=True, contour_levels=30, xminf_=None,
+def convergence_demo2d(logs, f, mincoord, maxcoord, contour_logspace=True,
+                       contour_levels=30, xminf_=None,
                        resample_evals_to=200):
     xmin = mincoord[0]
     xmax = maxcoord[1]
@@ -40,14 +41,18 @@ def convergence_demo2d(logs, f, mincoord, maxcoord, contour_logspace=True, conto
     xstep = (xmax - xmin) / 200
     ystep = (ymax - ymin) / 200
 
-    x, y = np.meshgrid(np.arange(xmin, xmax + xstep, xstep), np.arange(ymin, ymax + ystep, ystep))
+    x, y = np.meshgrid(np.arange(xmin, xmax + xstep, xstep),
+                       np.arange(ymin, ymax + ystep, ystep))
     z = f(np.array([x, y]))
 
     fig, ax = plt.subplots(figsize=(14, 9))
     if contour_logspace:
-        ax.contour(x, y, z, levels=np.logspace(0.0, 5.0, contour_levels), norm=LogNorm(), cmap=plt.cm.jet)
+        ax.contour(x, y, z, levels=np.logspace(0.0, 5.0, contour_levels),
+                   norm=LogNorm(), cmap=plt.cm.jet)
     else:
-        ax.contour(x, y, z, levels=np.linspace(np.min(z), np.max(z), contour_levels), cmap=plt.cm.jet)
+        ax.contour(x, y, z,
+                   levels=np.linspace(np.min(z), np.max(z), contour_levels),
+                   cmap=plt.cm.jet)
 
     for log in logs:
         its = bresenham(len(log.evals), resample_evals_to)
@@ -76,7 +81,8 @@ def min_up_to_element(l):
     return ret
 
 
-def goal_val_plot(logs, xtimestep='step', mintoi=True, fmin=None, plot_logarithm=True):
+def goal_val_plot(logs, xtimestep='step', mintoi=True,
+                  fmin=None, plot_logarithm=True):
     fig, ax = plt.subplots(figsize=(14, 9))
     if fmin is None:
         absminfx = min(min(ev[1] for ev in log.evals) for log in logs)

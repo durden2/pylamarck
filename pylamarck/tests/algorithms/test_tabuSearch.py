@@ -1,5 +1,6 @@
 from unittest import TestCase
-from pylamarck.algorithms.tabu_search import TabuSearch, SimpleTabuSearchNeighbourhood
+from pylamarck.algorithms.tabu_search import TabuSearch,\
+    SimpleTabuSearchNeighbourhood
 from pylamarck.spaces.bits.production import RandomBitSequence
 from pylamarck.production import ConstantSearch
 from pylamarck.spaces.bits.test_functions_bits import MaxSAT, sat_neighbourhood

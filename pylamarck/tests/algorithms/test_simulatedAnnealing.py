@@ -15,12 +15,18 @@ class TestSimulatedAnnealing(TestCase):
         nso_const = ConstantSearch([True for _ in range(n_vars)])
         uso = BitFlips(2)
 
-        schedules = [{"label": "exponential", "schedule": ExponentialSchedule(1.0, 0.05)},
-                     {"label": "logarithmic", "schedule": LogarithmicSchedule(1.0)},
-                     {"label": "polynomial", "schedule": PolynomialSchedule(1.0, 2, 500)}]
+        schedules = [{"label": "exponential",
+                      "schedule": ExponentialSchedule(1.0, 0.05)},
+                     {"label": "logarithmic",
+                      "schedule": LogarithmicSchedule(1.0)},
+                     {"label": "polynomial",
+                      "schedule": PolynomialSchedule(1.0, 2, 500)}]
         msat = MaxSAT(n_vars, 5, 3)
+        termination = TimeLimit(max_time) | MaxSteps(max_steps)
         for s in schedules:
-
-            search = SimulatedAnnealing(nso_const, uso, TimeLimit(max_time) | MaxSteps(max_steps), s["schedule"])
+            search = SimulatedAnnealing(nso_const,
+                                        uso,
+                                        termination,
+                                        s["schedule"])
             xsa = search.solve(msat)
             self.assertTrue(msat(xsa.g) <= msat(nso_const()))

@@ -3,7 +3,8 @@ from pylamarck.individual import IndividualFactory
 
 
 class TabuSearch(SearchAlgorithm):
-    def __init__(self, nso, neghbourhood_search, term, tabu_max_len, gpm=lambda x: x):
+    def __init__(self, nso, neghbourhood_search, term, tabu_max_len,
+                 gpm=lambda x: x):
         """
 
         :param nso: nullary search operator
@@ -24,9 +25,11 @@ class TabuSearch(SearchAlgorithm):
         best_ind = cur_ind = ind_fac.create_individual(self.nso())
         self.term.initialize()
         tabu = []
+        n_search = self.neghbourhood_search
 
         while not self.term.should_terminate() and cur_ind is not None:
-            new_ind, new_move = self.neghbourhood_search.get_move(tabu, cur_ind, best_ind, ind_fac)
+            new_ind, new_move = n_search.get_move(tabu, cur_ind,
+                                                  best_ind, ind_fac)
 
             cur_ind = new_ind
             if cur_ind is not None:
@@ -53,8 +56,10 @@ class SimpleTabuSearchNeighbourhood(TabuSearchNeighbourhood):
         new_move = None
         for move in self.neighbours(cur_ind):
             test_ind = ind_fac.create_individual(move.make_move(cur_ind))
-            disallowed = any(tabu_move.conflicts(move) for tabu_move in tabu_list)
-            if (not disallowed and (new_ind is None or test_ind < new_ind)) or test_ind < best_ind:
+            disallowed = any(tabu_move.conflicts(move)
+                             for tabu_move in tabu_list)
+            if (not disallowed and (new_ind is None or test_ind < new_ind))\
+                    or test_ind < best_ind:
                 new_ind = test_ind
                 new_move = move
         return new_ind, new_move
@@ -69,4 +74,3 @@ class TabuMove:
 
     def make_move(self, ind):
         raise NotImplementedError
-

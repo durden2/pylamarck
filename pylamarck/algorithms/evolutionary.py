@@ -59,7 +59,9 @@ class TournamentSelection(Selector):
     def __call__(self, population_with_fitness):
         ret = []
         for i in range(self.mps):
-            selected_indices = np.random.choice(range(len(population_with_fitness)), self.k, replace=False)
+            pop_num = len(population_with_fitness)
+            selected_indices = np.random.choice(range(pop_num), self.k,
+                                                replace=False)
             tournament = [population_with_fitness[i] for i in selected_indices]
             ret.append(min(tournament, key=lambda j: j[1]))
         return ret
@@ -83,7 +85,8 @@ class Reproducer:
 
 
 class RandomReproducer(Reproducer):
-    def __init__(self, offspring_size, uso, bso, probability_mutation, preserve_parents):
+    def __init__(self, offspring_size, uso, bso, probability_mutation,
+                 preserve_parents):
         """
 
         :param offspring_size:
@@ -111,14 +114,17 @@ class RandomReproducer(Reproducer):
                 selected_individual = mate_pool[parent_id][0]
                 offspring.append(self.uso(selected_individual))
             else:
-                parent_ids = np.random.choice(range(len(mate_pool)), 2, replace=False)
-                parents = mate_pool[parent_ids[0]][0], mate_pool[parent_ids[1]][0]
+                parent_ids = np.random.choice(range(mate_pool_size), 2,
+                                              replace=False)
+                parents = (mate_pool[parent_ids[0]][0],\
+                          mate_pool[parent_ids[1]][0])
                 offspring.append(self.bso(parents[0], parents[1]))
         return offspring
 
 
 class Evolutionary(SearchAlgorithm):
-    def __init__(self, nso, reproducer, selector, term, n0, evaluator=ObjectiveEvaluator(), gpm=lambda x: x,
+    def __init__(self, nso, reproducer, selector, term, n0,
+                 evaluator=ObjectiveEvaluator(), gpm=lambda x: x,
                  best_individual_selector=SimpleBestIndividualSelector()):
         """
 
@@ -129,7 +135,8 @@ class Evolutionary(SearchAlgorithm):
         :param n0: size of initial pool
         :param evaluator: calculates fitness
         :param gpm: genome phenome mapping
-        :param best_individual_selector: a callable object for selecting new best individual
+        :param best_individual_selector: a callable object for selecting new
+                best individual
         """
         self.nso = nso
         self.evaluator = evaluator
@@ -148,11 +155,18 @@ class Evolutionary(SearchAlgorithm):
         self.term.initialize()
 
         while not self.term.should_terminate():
-            population = [ind_fac.create_individual(rg, epoch=epoch) for rg in genotypes]  # gpm and evaluation
-            best_ind = self.best_individual_selector(best_ind, population)  # selecting new best individual
-            population_with_fitness = [(ind, self.evaluator(ind)) for ind in population]  # fitness assignment
-            mate_pool = self.selector(population_with_fitness)  # selection
-            genotypes = self.reproducer(mate_pool)  # reproduction
+            # gpm and evaluation
+            population = [ind_fac.create_individual(rg, epoch=epoch)
+                          for rg in genotypes]
+            # selecting new best individual
+            best_ind = self.best_individual_selector(best_ind, population)
+            # fitness assignment
+            population_with_fitness = [(ind, self.evaluator(ind))
+                                       for ind in population]
+            # selection
+            mate_pool = self.selector(population_with_fitness)
+            # reproduction
+            genotypes = self.reproducer(mate_pool)
             epoch += 1
 
         return best_ind

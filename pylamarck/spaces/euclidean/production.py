@@ -10,7 +10,8 @@ class RandomUniformSearch(NullarySearchOperation):
         self._bi = bi
 
     def __call__(self):
-        return np.array([random.uniform(self._ai[i], self._bi[i]) for i in range(len(self._ai))])
+        return np.array([random.uniform(self._ai[i], self._bi[i])
+                         for i in range(len(self._ai))])
 
 
 class BoxCond:
@@ -19,7 +20,8 @@ class BoxCond:
         self._bi = bi
 
     def __call__(self, x):
-        return all([self._ai[i] <= x[i] <= self._bi[i] for i in range(len(x))])
+        return all([self._ai[i] <= x[i] <= self._bi[i]
+                    for i in range(len(x))])
 
 
 class GaussianRn:
@@ -29,7 +31,8 @@ class GaussianRn:
         self._sigma = sigma
 
     def __call__(self):
-        return np.array([random.gauss(self._mu, self._sigma) for _ in range(self._n)])
+        return np.array([random.gauss(self._mu, self._sigma)
+                         for _ in range(self._n)])
 
 
 class RandomAdditiveMutation(UnarySearchOperation):

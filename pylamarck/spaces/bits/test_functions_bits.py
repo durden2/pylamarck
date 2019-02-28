@@ -10,7 +10,8 @@ class MaxSAT:
         for i in range(n_conj):
             cur_disj = []
             for j in range(n_disj):
-                cur_disj.append((random.randint(0, n_vars-1), random.choice([True, False])))
+                cur_disj.append((random.randint(0, n_vars-1),
+                                 random.choice([True, False])))
             self.formula.append(cur_disj)
 
     def check(self, x):
@@ -93,8 +94,10 @@ class Knapsack:
                  min_value=10,
                  max_value=1000):
         self.knapsack_size = knapsack_size
-        self.weights = np.random.randint(min_weight, max_weight, number_of_products)
-        self.values = np.random.randint(min_value, max_value, number_of_products)
+        self.weights = np.random.randint(min_weight, max_weight,
+                                         number_of_products)
+        self.values = np.random.randint(min_value, max_value,
+                                        number_of_products)
         self.number_of_products = number_of_products
 
     def __call__(self, x):
@@ -105,7 +108,10 @@ class Knapsack:
 
     def repair(self, x):
         x_repaired = copy(x)
-        value_to_weight_sorted_indices = sorted(range(len(x)), key=lambda k: self.values[k]/self.weights[k])
+        value_to_weight_sorted_indices =\
+            sorted(range(len(x)),
+                   key=lambda k: self.values[k]/self.weights[k])
+
         for i in value_to_weight_sorted_indices:
             if self.get_weight(x_repaired) <= self.knapsack_size:
                 break

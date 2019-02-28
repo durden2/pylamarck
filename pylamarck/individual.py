@@ -10,7 +10,9 @@ class Individual:
         return self.y < other.y
 
     def __str__(self):
-        return "Individual: g = {}, p = {}, y = {}".format(self.g, self.p, self.y)
+        return "Individual: g = {}, p = {}, y = {}".format(self.g,
+                                                           self.p,
+                                                           self.y)
 
 
 class IndividualFactory:

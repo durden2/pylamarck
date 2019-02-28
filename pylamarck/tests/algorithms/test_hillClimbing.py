@@ -1,7 +1,8 @@
 from unittest import TestCase
 from pylamarck.algorithms.hill_climbing import HillClimbing
 from pylamarck.termination import MaxSteps
-from pylamarck.spaces.euclidean.production import RandomAdditiveMutation, BoxCond, GaussianRn
+from pylamarck.spaces.euclidean.production import RandomAdditiveMutation,\
+    BoxCond, GaussianRn
 from pylamarck.production import ConstantSearch
 import random
 

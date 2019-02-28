@@ -3,7 +3,7 @@ from pylamarck.individual import IndividualFactory
 
 
 class RandomSampling(SearchAlgorithm):
-    def __init__(self, nso, term, gpm = lambda x: x):
+    def __init__(self, nso, term, gpm=lambda x: x):
         """
 
         :param nso: nullary search operator

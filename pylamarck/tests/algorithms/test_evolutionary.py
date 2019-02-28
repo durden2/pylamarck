@@ -10,7 +10,8 @@ class TestEvolutionary(TestCase):
         knapsack_f = Knapsack()
         ind_fac = IndividualFactory(lambda x: x, knapsack_f)
         nso = RandomBitSequence(knapsack_f.number_of_products)
-        population = [ind_fac.create_individual(g) for g in nso.create_many(10)]
+        population = [ind_fac.create_individual(g)
+                      for g in nso.create_many(10)]
         evaluator = ObjectiveEvaluator()
         population_with_fitness = [(ind, evaluator(ind)) for ind in population]
         self.assertEqual(population_with_fitness[0][1], population[0].y)
