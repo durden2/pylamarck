@@ -116,8 +116,8 @@ class RandomReproducer(Reproducer):
             else:
                 parent_ids = np.random.choice(range(mate_pool_size), 2,
                                               replace=False)
-                parents = (mate_pool[parent_ids[0]][0],\
-                          mate_pool[parent_ids[1]][0])
+                parents = (mate_pool[parent_ids[0]][0],
+                           mate_pool[parent_ids[1]][0])
                 offspring.append(self.bso(parents[0], parents[1]))
         return offspring
 

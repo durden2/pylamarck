@@ -1,6 +1,6 @@
 from unittest import TestCase
-from pylamarck.algorithms.simulated_annealing import SimulatedAnnealing, ExponentialSchedule, LogarithmicSchedule, \
-    PolynomialSchedule
+from pylamarck.algorithms.simulated_annealing import SimulatedAnnealing,\
+    ExponentialSchedule, LogarithmicSchedule, PolynomialSchedule
 from pylamarck.termination import MaxSteps, TimeLimit
 from pylamarck.production import ConstantSearch
 from pylamarck.spaces.bits.production import BitFlips

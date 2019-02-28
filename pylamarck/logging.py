@@ -57,7 +57,9 @@ def convergence_demo2d(logs, f, mincoord, maxcoord, contour_logspace=True,
     for log in logs:
         its = bresenham(len(log.evals), resample_evals_to)
         evals = [log.evals[i] for i in its]
-        ax.plot([ev[0][0][0] for ev in evals], [ev[0][0][1] for ev in evals], label=log.label)
+        ax.plot([ev[0][0][0] for ev in evals],
+                [ev[0][0][1] for ev in evals],
+                label=log.label)
 
     if xminf_ is not None:
         ax.plot(*xminf_, 'o', markersize=5)

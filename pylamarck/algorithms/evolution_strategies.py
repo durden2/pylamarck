@@ -1,4 +1,5 @@
-from pylamarck.algorithms.evolutionary import Evolutionary, TruncationSelection, RandomReproducer, ObjectiveEvaluator
+from pylamarck.algorithms.evolutionary import Evolutionary,\
+    TruncationSelection, RandomReproducer, ObjectiveEvaluator
 from pylamarck.algorithms.algorithm import SearchAlgorithm
 from pylamarck.production import BinarySearchOperation
 

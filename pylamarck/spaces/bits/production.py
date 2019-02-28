@@ -1,4 +1,5 @@
-from pylamarck.production import NullarySearchOperation, UnarySearchOperation, BinarySearchOperation
+from pylamarck.production import NullarySearchOperation,\
+    UnarySearchOperation, BinarySearchOperation
 
 import random
 from copy import copy
@@ -47,7 +48,8 @@ class MultiPointCrossover(BinarySearchOperation):
         parent_1_g = parent_1.g
         parent_2_g = parent_2.g
         n = len(parent_1_g)
-        split_points = list(sorted(np.random.choice(range(1, n-1), self.k, replace=False)))
+        split_points = list(sorted(np.random.choice(range(1, n-1), self.k,
+                                                    replace=False)))
         parents = (parent_1_g, parent_2_g)
         parent_ids = [0 for _ in range(n)]
         sp_i = 0
