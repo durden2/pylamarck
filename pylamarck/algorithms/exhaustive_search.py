@@ -21,7 +21,7 @@ class ExhaustiveSearchExtended(SearchAlgorithm):
         self.gpm = gpm
 
     def solve(self, f):
-        ind_fac = IndividualFactory(self.gpm, f)
+        ind_fac = IndividualFactory(f, self.gpm)
         cxs = iter(self.xs)
         best_ind = ind_fac.create_individual(next(cxs))
         for x in cxs:

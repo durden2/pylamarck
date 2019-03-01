@@ -3,6 +3,7 @@ from pylamarck.production import NullarySearchOperation,\
 
 import numpy as np
 import random
+import copy
 
 
 class RandomUniformSearch(NullarySearchOperation):
@@ -104,3 +105,22 @@ class GaussianESMutation(UnarySearchOperation):
 
     def new_best_individual(self, old_best, new_best):
         self._s += 1
+
+
+class DiscreteRecombination(SearchOperation):
+    def __call__(self, parents):
+        new_g = copy.copy(parents[0].g)
+        n_parents = len(parents)
+        for i in range(len(new_g)):
+            new_g[i] = parents[random.randint(0, n_parents-1)].g[i]
+        return new_g
+
+
+class IntermediateRecombination(SearchOperation):
+    def __call__(self, parents):
+        new_g = copy.copy(parents[0].g)
+        n_parents = len(parents)
+        for i in range(len(new_g)):
+            parent_values = [parents[k].g[i] for k in range(n_parents)]
+            new_g[i] = np.mean(parent_values)
+        return new_g

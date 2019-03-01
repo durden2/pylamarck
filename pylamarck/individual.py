@@ -16,9 +16,9 @@ class Individual:
 
 
 class IndividualFactory:
-    def __init__(self, gpm, f):
-        self.gpm = gpm
+    def __init__(self, f, gpm=lambda x: x):
         self.f = f
+        self.gpm = gpm
 
     def create_individual(self, g, epoch=None):
         p = self.gpm(g)
