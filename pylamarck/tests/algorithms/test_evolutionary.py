@@ -21,8 +21,7 @@ class TestEvolutionary(TestCase):
         rw_selector = RouletteWheel(num_to_select)
         selected = rw_selector(population_with_fitness)
         self.assertEqual(len(selected), num_to_select)
-        
+
         ts_selector = TournamentSelection(4, num_to_select)
         selected = ts_selector(population_with_fitness)
         self.assertEqual(len(selected), num_to_select)
-

@@ -5,6 +5,7 @@ import numpy as np
 import random
 import copy
 
+
 class RandomUniformSearch(NullarySearchOperation):
     def __init__(self, ai, bi):
         self._ai = ai
