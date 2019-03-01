@@ -52,3 +52,21 @@ class TimeLimit(TerminationCriterion):
     def should_terminate(self):
         t1 = time.time()
         return t1 - self._t0 > self._max_seconds
+
+
+class EpochCallback(TerminationCriterion):
+    def __init__(self, functions_to_call):
+        """
+
+        :param functions_to_call: functions called at the beginning of
+            each epoch.
+        """
+        self._functions_to_call = functions_to_call
+
+    def initialize(self):
+        pass
+
+    def should_terminate(self):
+        for f in self._functions_to_call:
+            f()
+        return False

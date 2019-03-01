@@ -17,6 +17,40 @@ class SimpleBestIndividualSelector(BestIndividualSelector):
         return new_best
 
 
+class BestIndividualSelectorSN(BestIndividualSelector):
+    """
+    Selector of the best individual with notification of successful
+    update of the best individual.
+    """
+    def __init__(self, listener, per_population=True):
+        """
+
+        :param listener: function to call when a better best individual
+            is found. Two arguments are passed: the old best individual and
+            the new best individual.
+        :param per_population: if true, listener is called once per
+            selection from the entire population. If false, listener
+            is called each time a better individual is found.
+        """
+        self._listener = listener
+        self._per_population = per_population
+
+    def __call__(self, previous_best, population):
+        new_best = previous_best
+        better_ind_found = False
+        for ind in population:
+            if ind < new_best:
+                if not self._per_population:
+                    self._listener(new_best, ind)
+                new_best = ind
+                better_ind_found = True
+
+        if better_ind_found and self._per_population:
+            self._listener(previous_best, new_best)
+
+        return new_best
+
+
 class Evaluator:
     def __call__(self, ind):
         raise NotImplementedError

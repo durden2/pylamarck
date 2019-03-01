@@ -6,6 +6,12 @@ class SearchOperation:
     def __call__(self, *args):
         raise NotImplementedError
 
+    def new_epoch(self):
+        pass
+
+    def new_best_individual(self, old_best, new_best):
+        pass
+
 
 class NullarySearchOperation(SearchOperation):
     def __call__(self):
