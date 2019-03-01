@@ -70,4 +70,3 @@ class EpochCallback(TerminationCriterion):
         for f in self._functions_to_call:
             f()
         return False
-

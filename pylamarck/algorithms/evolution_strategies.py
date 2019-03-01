@@ -98,4 +98,3 @@ class AdaptiveEvolutionStrategy(SearchAlgorithm):
 
     def solve(self, f):
         return self.search.solve(f)
-

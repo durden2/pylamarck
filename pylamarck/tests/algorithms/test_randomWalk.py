@@ -6,8 +6,8 @@ from pylamarck.production import ConstantSearch
 import random
 from pylamarck.termination import MaxSteps
 from pylamarck.logging import EvaluationLogger, logme
-import math
 import numpy as np
+
 
 class TestRandomWalk(TestCase):
     def test(self):
