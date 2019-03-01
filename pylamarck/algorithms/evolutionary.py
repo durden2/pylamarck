@@ -72,12 +72,14 @@ class RouletteWheel(Selector):
         self.with_replacement = with_replacement
 
     def __call__(self, population_with_fitness):
+        pop_num = len(population_with_fitness)
         sum_fitness = sum(x[1] for x in population_with_fitness)
         probabilities = [x[1]/sum_fitness for x in population_with_fitness]
-        return list(np.random.choice(population_with_fitness,
-                                     self.num_of_selected,
-                                     p=probabilities,
-                                     replace=self.with_replacement))
+        selected_indices = np.random.choice(range(pop_num),
+                                            self.num_of_selected,
+                                            p=probabilities,
+                                            replace=self.with_replacement)
+        return [population_with_fitness[i] for i in selected_indices]
 
 
 class TournamentSelection(Selector):
@@ -182,7 +184,7 @@ class Evolutionary(SearchAlgorithm):
         self.best_individual_selector = best_individual_selector
 
     def solve(self, f):
-        ind_fac = IndividualFactory(self.gpm, f)
+        ind_fac = IndividualFactory(f, self.gpm)
         epoch = 0
         genotypes = self.nso.create_many(self.n0)
         best_ind = ind_fac.create_individual(genotypes[0], epoch=epoch)

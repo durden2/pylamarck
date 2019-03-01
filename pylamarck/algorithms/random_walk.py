@@ -17,7 +17,7 @@ class RandomWalk(SearchAlgorithm):
         self.gpm = gpm
 
     def solve(self, f):
-        ind_fac = IndividualFactory(self.gpm, f)
+        ind_fac = IndividualFactory(f, self.gpm)
         best_ind = ind_fac.create_individual(self.nso())
         self.term.initialize()
 

@@ -24,7 +24,7 @@ class SimulatedAnnealing(SearchAlgorithm):
     def solve(self, f):
         time = 1
 
-        ind_fac = IndividualFactory(self.gpm, f)
+        ind_fac = IndividualFactory(f, self.gpm)
         cur_ind = ind_fac.create_individual(self.nso())
         self.term.initialize()
         best_ind = cur_ind
