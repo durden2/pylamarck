@@ -33,7 +33,7 @@ class TabuSearch(SearchAlgorithm):
 
             cur_ind = new_ind
             if cur_ind is not None:
-                if cur_ind < best_ind:
+                if cur_ind.lt_goal(best_ind):
                     best_ind = cur_ind
                 tabu.append(new_move.reverse())
                 if len(tabu) > self.tabu_max_len:
@@ -58,8 +58,9 @@ class SimpleTabuSearchNeighbourhood(TabuSearchNeighbourhood):
             test_ind = ind_fac.create_individual(move.make_move(cur_ind))
             disallowed = any(tabu_move.conflicts(move)
                              for tabu_move in tabu_list)
-            if (not disallowed and (new_ind is None or test_ind < new_ind))\
-                    or test_ind < best_ind:
+            if (not disallowed and
+                (new_ind is None or test_ind.lt_goal(new_ind)))\
+                    or test_ind.lt_goal(best_ind):
                 new_ind = test_ind
                 new_move = move
         return new_ind, new_move

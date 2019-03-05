@@ -34,7 +34,7 @@ class SimulatedAnnealing(SearchAlgorithm):
             delta_e = new_ind.y - cur_ind.y
             if delta_e < 0:
                 cur_ind = new_ind
-                if new_ind < best_ind:
+                if new_ind.lt_goal(best_ind):
                     best_ind = new_ind
             else:
                 temperature = self.temperature_schedule(time)

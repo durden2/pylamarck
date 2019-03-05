@@ -49,3 +49,14 @@ def frosenn(x):
     """
     return sum([100*(x[i+1]-x[i]**2)**2 + (1-x[i])**2
                 for i in range(len(x)-1)])
+
+
+def frastrigin(x):
+    """
+    Rastrigin function
+    :param x:
+    :return:
+    """
+    return 20 +\
+           (x[0] ** 2 - 10 * np.cos(2 * np.pi * x[0])) +\
+           (x[1] ** 2 - 10 * np.cos(2 * np.pi * x[1]))
