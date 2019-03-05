@@ -24,4 +24,3 @@ class TestDifferentialEvolution(TestCase):
 
         x = search.solve(f)
         self.assertAlmostEqual(x.g[0], 0.25, places=2)
-

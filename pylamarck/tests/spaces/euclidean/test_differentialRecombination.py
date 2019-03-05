@@ -15,4 +15,3 @@ class TestDifferentialRecombination(TestCase):
                         ind_fac.create_individual(g2),
                         ind_fac.create_individual(g3)])
         self.assertListEqual(offspring, [-1.5, -1.5, -2.5])
-

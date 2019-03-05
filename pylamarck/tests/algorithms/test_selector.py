@@ -26,4 +26,3 @@ class TestSelector(TestCase):
             selected = s(population)
             for ind in selected:
                 self.assertIsInstance(ind, Individual)
-
