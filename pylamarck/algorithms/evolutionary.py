@@ -202,7 +202,8 @@ class RandomReproducer(Reproducer):
                 parents = (mate_pool[parent_ids[0]],
                            mate_pool[parent_ids[1]])
                 new_genotype = self.bso(parents[0], parents[1])
-            new_ind = ind_fac.create_individual(new_genotype, generation=generation)
+            new_ind = ind_fac.create_individual(new_genotype,
+                                                generation=generation)
             offspring.append(new_ind)
         return offspring
 

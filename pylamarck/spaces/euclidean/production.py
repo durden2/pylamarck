@@ -31,7 +31,7 @@ class BoxConstraint(Constraint):
         return np.clip(x, self.ai, self.bi)
 
 
-class GaussianRn(UnarySearchOperation):
+class GaussianRn(NullarySearchOperation):
     def __init__(self, n, sigma, mu=0.0):
         self._n = n
         self._mu = mu
@@ -69,9 +69,9 @@ class RandomAdditiveMutation(UnarySearchOperation):
             self._rng.new_best_individual(old_best, new_best)
 
 
-class GaussianESMutation(UnarySearchOperation):
+class GaussianESMutation(NullarySearchOperation):
     """
-    Gaussian mutation for evolutionary strategies.
+    Rng for gaussian mutation for evolutionary strategies.
     """
     def __init__(self, n, sigma, a, update_period,
                  update_threshold=0.2,

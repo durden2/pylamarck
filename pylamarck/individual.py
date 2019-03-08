@@ -31,7 +31,8 @@ class IndividualFactory:
         self.f = f
         self.gpm = gpm
 
-    def create_individual(self, g, generation=None, reproduction_auxiliary=None):
+    def create_individual(self, g, generation=None,
+                          reproduction_auxiliary=None):
         p = self.gpm(g)
         y = self.f(p)
         return Individual(g,
