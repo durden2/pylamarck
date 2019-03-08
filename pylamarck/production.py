@@ -6,7 +6,7 @@ class SearchOperation:
     def __call__(self, *args):
         raise NotImplementedError
 
-    def new_epoch(self):
+    def new_generation(self):
         pass
 
     def new_best_individual(self, old_best, new_best):

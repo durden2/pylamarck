@@ -162,7 +162,7 @@ class ParentReplacementSelection(Selector):
 
 
 class Reproducer:
-    def __call__(self, mate_pool, ind_fac, epoch):
+    def __call__(self, mate_pool, ind_fac, generation):
         raise NotImplementedError
 
 
@@ -183,7 +183,7 @@ class RandomReproducer(Reproducer):
         self.probability_mutation = probability_mutation
         self.preserve_parents = preserve_parents
 
-    def __call__(self, mate_pool, ind_fac, epoch):
+    def __call__(self, mate_pool, ind_fac, generation):
         if self.preserve_parents:
             offspring = copy.copy(mate_pool)
         else:
@@ -202,7 +202,8 @@ class RandomReproducer(Reproducer):
                 parents = (mate_pool[parent_ids[0]],
                            mate_pool[parent_ids[1]])
                 new_genotype = self.bso(parents[0], parents[1])
-            new_ind = ind_fac.create_individual(new_genotype, epoch=epoch)
+            new_ind = ind_fac.create_individual(new_genotype,
+                                                generation=generation)
             offspring.append(new_ind)
         return offspring
 
@@ -235,11 +236,10 @@ class Evolutionary(SearchAlgorithm):
 
     def solve(self, f):
         ind_fac = IndividualFactory(f, self.gpm)
-        epoch = 0
-        population = [ind_fac.create_individual(rg, epoch=epoch)
+        generation = 0
+        population = [ind_fac.create_individual(rg, generation=generation)
                       for rg in self.nso.create_many(self.n0)]
         best_ind = None
-        reproduction_auxiliary = None
         self.term.initialize()
 
         while not self.term.should_terminate():
@@ -251,9 +251,9 @@ class Evolutionary(SearchAlgorithm):
 
             # selection
             mate_pool = self.selector(population)
-            epoch += 1
+            generation += 1
             # reproduction
             # gpm and evaluation
-            population = self.reproducer(mate_pool, ind_fac, epoch)
+            population = self.reproducer(mate_pool, ind_fac, generation)
 
         return best_ind
