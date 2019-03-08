@@ -3,7 +3,7 @@ from pylamarck.algorithms.evolutionary import Evolutionary,\
     BestIndividualSelectorSN
 from pylamarck.algorithms.algorithm import SearchAlgorithm
 from pylamarck.production import BinarySearchOperation
-from pylamarck.termination import EpochCallback
+from pylamarck.termination import GenerationCallback
 
 
 class EvolutionStrategy(SearchAlgorithm):
@@ -80,7 +80,7 @@ class AdaptiveEvolutionStrategy(SearchAlgorithm):
                                       1.01,
                                       preserve_parents)
 
-        epoch_callback = EpochCallback([lambda: uso.new_epoch()])
+        gen_callback = GenerationCallback([lambda: uso.new_generation()])
 
         def best_ind_listener(old_best_ind, new_best_ind):
             uso.new_best_individual(old_best_ind, new_best_ind)
@@ -90,7 +90,7 @@ class AdaptiveEvolutionStrategy(SearchAlgorithm):
         self.search = Evolutionary(nso=nso,
                                    reproducer=reproducer,
                                    selector=TruncationSelection(mu_param),
-                                   term=term | epoch_callback,
+                                   term=term | gen_callback,
                                    n0=self.mu_param,
                                    evaluator=evaluator,
                                    gpm=gpm,

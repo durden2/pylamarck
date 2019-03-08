@@ -60,9 +60,9 @@ class RandomAdditiveMutation(UnarySearchOperation):
 
         return new
 
-    def new_epoch(self):
+    def new_generation(self):
         if isinstance(self._rng, SearchOperation):
-            self._rng.new_epoch()
+            self._rng.new_generation()
 
     def new_best_individual(self, old_best, new_best):
         if isinstance(self._rng, SearchOperation):
@@ -93,14 +93,14 @@ class GaussianESMutation(UnarySearchOperation):
         self._a = a
         self._update_period = update_period
         self._update_threshold = update_threshold
-        self._t = 1  # epoch
+        self._t = 1  # generation
         self._s = 0  # successful update counter
 
     def __call__(self):
         return np.array([random.gauss(self._mu, self._sigma)
                          for _ in range(self._n)])
 
-    def new_epoch(self):
+    def new_generation(self):
         if self._t % self._update_period == 0:
             if self._s / self._update_period < self._update_threshold:
                 self._sigma *= self._a
@@ -160,7 +160,7 @@ class DEReproducer(Reproducer):
         """
         self._recombination = recombination
 
-    def __call__(self, mate_pool, ind_fac, epoch):
+    def __call__(self, mate_pool, ind_fac, generation):
         offspring = []
         mate_pool_size = len(mate_pool)
         for i, ind_i in enumerate(mate_pool):
@@ -174,7 +174,7 @@ class DEReproducer(Reproducer):
                                          mate_pool[i]])
             new_ind =\
                 ind_fac.create_individual(new_g,
-                                          epoch=epoch,
+                                          generation=generation,
                                           reproduction_auxiliary=mate_pool[i])
             offspring.append(new_ind)
 

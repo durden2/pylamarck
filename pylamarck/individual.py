@@ -1,11 +1,11 @@
 
 class Individual:
-    def __init__(self, g, p, y, epoch=None, reproduction_auxiliary=None,
+    def __init__(self, g, p, y, generation=None, reproduction_auxiliary=None,
                  fitness=None):
         self.g = g
         self.p = p
         self.y = y
-        self.epoch = epoch
+        self.generation = generation
         self.reproduction_auxiliary = reproduction_auxiliary
         self.fitness = fitness
 
@@ -16,12 +16,12 @@ class Individual:
         return self.fitness < other.fitness
 
     def __str__(self):
-        str_desc = "Individual: g = {}, p = {}, y = {}, epoch = {}, " \
+        str_desc = "Individual: g = {}, p = {}, y = {}, generation = {}, " \
                    "reproduction_auxiliary = {}, fitness = {}"
         return str_desc.format(self.g,
                                self.p,
                                self.y,
-                               self.epoch,
+                               self.generation,
                                self.reproduction_auxiliary,
                                self.fitness)
 
@@ -31,13 +31,13 @@ class IndividualFactory:
         self.f = f
         self.gpm = gpm
 
-    def create_individual(self, g, epoch=None, reproduction_auxiliary=None):
+    def create_individual(self, g, generation=None, reproduction_auxiliary=None):
         p = self.gpm(g)
         y = self.f(p)
         return Individual(g,
                           p,
                           y,
-                          epoch=epoch,
+                          generation=generation,
                           reproduction_auxiliary=reproduction_auxiliary)
 
 
