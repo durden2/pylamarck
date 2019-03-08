@@ -26,6 +26,6 @@ class ExhaustiveSearchExtended(SearchAlgorithm):
         best_ind = ind_fac.create_individual(next(cxs))
         for x in cxs:
             new_ind = ind_fac.create_individual(x)
-            if new_ind < best_ind:
+            if new_ind.lt_goal(best_ind):
                 best_ind = new_ind
         return best_ind

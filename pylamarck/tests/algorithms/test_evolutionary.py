@@ -14,14 +14,16 @@ class TestEvolutionary(TestCase):
         population = [ind_fac.create_individual(g)
                       for g in nso.create_many(10)]
         evaluator = ObjectiveEvaluator()
-        population_with_fitness = [(ind, evaluator(ind)) for ind in population]
-        self.assertEqual(population_with_fitness[0][1], population[0].y)
+        for ind in population:
+            evaluator(ind)
+
+        self.assertEqual(population[0].fitness, population[0].y)
 
         num_to_select = 3
         rw_selector = RouletteWheel(num_to_select)
-        selected = rw_selector(population_with_fitness)
+        selected = rw_selector(population)
         self.assertEqual(len(selected), num_to_select)
 
         ts_selector = TournamentSelection(4, num_to_select)
-        selected = ts_selector(population_with_fitness)
+        selected = ts_selector(population)
         self.assertEqual(len(selected), num_to_select)

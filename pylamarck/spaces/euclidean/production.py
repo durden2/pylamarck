@@ -1,5 +1,7 @@
 from pylamarck.production import NullarySearchOperation,\
     UnarySearchOperation, SearchOperation
+from pylamarck.individual import Constraint
+from pylamarck.algorithms.evolutionary import Reproducer
 
 import numpy as np
 import random
@@ -16,14 +18,17 @@ class RandomUniformSearch(NullarySearchOperation):
                          for i in range(len(self._ai))])
 
 
-class BoxCond:
+class BoxConstraint(Constraint):
     def __init__(self, ai, bi):
-        self._ai = ai
-        self._bi = bi
+        self.ai = ai
+        self.bi = bi
 
-    def __call__(self, x):
-        return all([self._ai[i] <= x[i] <= self._bi[i]
+    def check(self, x):
+        return all([self.ai[i] <= x[i] <= self.bi[i]
                     for i in range(len(x))])
+
+    def fix(self, x):
+        return np.clip(x, self.ai, self.bi)
 
 
 class GaussianRn(UnarySearchOperation):
@@ -124,3 +129,53 @@ class IntermediateRecombination(SearchOperation):
             parent_values = [parents[k].g[i] for k in range(n_parents)]
             new_g[i] = np.mean(parent_values)
         return new_g
+
+
+class DifferentialRecombination(SearchOperation):
+    def __init__(self, strength, fix_genotype=lambda x: x):
+        """
+
+        :param strength: coefficient of difference term
+        :param fix_genotype: function
+        """
+        self._strength = strength
+        self._fix_genotype = fix_genotype
+
+    def __call__(self, parents):
+        new_g = [parents[2].g[i] +
+                 self._strength * (parents[0].g[i] - parents[1].g[i])
+                 for i in range(len(parents[2].g))]
+        return self._fix_genotype(new_g)
+
+
+class DEReproducer(Reproducer):
+    """
+    Reproducer for differential evolution.
+    """
+    def __init__(self, recombination):
+        """
+
+        :param recombination: ternary recombination operator
+            main parent is passed as the third one
+        """
+        self._recombination = recombination
+
+    def __call__(self, mate_pool, ind_fac, epoch):
+        offspring = []
+        mate_pool_size = len(mate_pool)
+        for i, ind_i in enumerate(mate_pool):
+            range_without_i = list(filter(lambda x: x != i,
+                                          range(mate_pool_size)))
+            j, k = np.random.choice(range_without_i,
+                                    2,
+                                    replace=False)
+            new_g = self._recombination([mate_pool[j],
+                                         mate_pool[k],
+                                         mate_pool[i]])
+            new_ind =\
+                ind_fac.create_individual(new_g,
+                                          epoch=epoch,
+                                          reproduction_auxiliary=mate_pool[i])
+            offspring.append(new_ind)
+
+        return offspring

@@ -23,6 +23,6 @@ class HillClimbing(SearchAlgorithm):
 
         while not self.term.should_terminate():
             new_ind = ind_fac.create_individual(self.uso(best_ind))
-            if new_ind < best_ind:
+            if new_ind.lt_goal(best_ind):
                 best_ind = new_ind
         return best_ind
