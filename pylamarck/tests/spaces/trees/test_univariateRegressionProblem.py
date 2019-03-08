@@ -54,5 +54,3 @@ class TestUnivariateRegressionProblem(TestCase):
                                 term=MaxSteps(20))
         expr = es1.solve(unireg)
         self.assertTrue(expr.y < 5.0)
-
-

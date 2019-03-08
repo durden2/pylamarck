@@ -5,7 +5,8 @@ import numpy as np
 
 
 class SymbolicNode(Node):
-    def __init__(self, tag, child_tags, evaluator, print_name, child_nodes=None):
+    def __init__(self, tag, child_tags, evaluator, print_name,
+                 child_nodes=None):
         self.tag = tag
         self.child_tags = child_tags
         self.evaluator = evaluator
@@ -147,4 +148,3 @@ class UnivariateRegressionProblem:
             return np.linalg.norm(self.ys - calc_ys) ** 2
         except (OverflowError, ValueError):
             return math.inf
-
