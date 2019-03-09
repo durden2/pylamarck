@@ -32,7 +32,7 @@ def bresenham(n, m):
 
 def convergence_demo2d(logs, f, mincoord, maxcoord, contour_logspace=True,
                        contour_levels=30, xminf_=None,
-                       resample_evals_to=200):
+                       resample_evals_to=200, show_plot=True):
     xmin = mincoord[0]
     xmax = maxcoord[1]
     ymin = mincoord[0]
@@ -70,21 +70,23 @@ def convergence_demo2d(logs, f, mincoord, maxcoord, contour_logspace=True,
 
     ax.set_xlim((xmin, xmax))
     ax.set_ylim((ymin, ymax))
-    plt.show()
+    if show_plot:
+        plt.show()
+    return plt
 
 
 def min_up_to_element(l):
     ret = [l[0]]
-    mval = l[0]
+    min_val = l[0]
     for i in range(1, len(l)):
-        if l[i] < mval:
-            mval = l[i]
-        ret.append(mval)
+        if l[i] < min_val:
+            min_val = l[i]
+        ret.append(min_val)
     return ret
 
 
 def goal_val_plot(logs, xtimestep='step', mintoi=True,
-                  fmin=None, plot_logarithm=True):
+                  fmin=None, plot_logarithm=True, show_plot=True):
     fig, ax = plt.subplots(figsize=(14, 9))
     if fmin is None:
         absminfx = min(min(ev[1] for ev in log.evals) for log in logs)
@@ -112,9 +114,11 @@ def goal_val_plot(logs, xtimestep='step', mintoi=True,
 
     ax.set_xlabel(xtimestep)
     if plot_logarithm:
-        ax.set_ylabel('$\log_{10}(f(x)-f_{min}+1)$')
+        ax.set_ylabel('$\\log_{10}(f(x)-f_{min}+1)$')
     else:
         ax.set_ylabel('$f(x)-f_{min}$')
 
     ax.legend(loc='upper left')
-    plt.show()
+    if show_plot:
+        plt.show()
+    return plt

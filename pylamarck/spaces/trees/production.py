@@ -1,4 +1,5 @@
 from pylamarck.production import NullarySearchOperation, UnarySearchOperation
+from pylamarck.algorithms.evolutionary import Evaluator
 
 import numpy as np
 import random
@@ -37,6 +38,23 @@ class Node:
         else:
             return 1 + sum(self.get_child(i).get_node_number()
                            for i in range(self.num_children()))
+
+
+class SimplifyingEvaluator(Evaluator):
+    """
+    Evaluator that punishes large trees
+    """
+    def __init__(self, coeff_num_nodes, coeff_depth):
+        self.coeff_num_nodes = coeff_num_nodes
+        self.coeff_depth = coeff_depth
+
+    def __call__(self, ind):
+        num_nodes = ind.g.get_node_number()
+        depth = ind.g.get_depth()
+        ind.fitness = ind.y +\
+            self.coeff_num_nodes * num_nodes +\
+            self.coeff_depth * depth
+        return ind.fitness
 
 
 class NodeGenerator:
