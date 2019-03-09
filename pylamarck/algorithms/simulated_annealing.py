@@ -69,23 +69,23 @@ class ExponentialSchedule:
 
 
 class PolynomialSchedule:
-    def __init__(self, init_temp, alpha, tmax):
+    def __init__(self, init_temp, alpha, t_max):
         self.init_temp = init_temp
         self.alpha = alpha
-        self.tmax = tmax
+        self.t_max = t_max
 
     def __call__(self, time):
-        return self.init_temp * (max(0.0, 1 - (time/self.tmax)))**self.alpha
+        return self.init_temp * (max(0.0, 1 - (time/self.t_max)))**self.alpha
 
 
-def temperature_schedule_plot(schedules, tmax):
+def temperature_schedule_plot(schedules, t_max):
     fig, ax = plt.subplots(figsize=(14, 9))
 
     for schedule in schedules:
-        xrange = range(1, tmax)
-        vals_y = list(map(schedule["schedule"], xrange))
+        x_range = range(1, t_max)
+        values_y = list(map(schedule["schedule"], x_range))
 
-        ax.plot(list(xrange), vals_y,
+        ax.plot(list(x_range), values_y,
                 label=schedule["label"], linestyle='-')
 
     ax.set_xlabel("time")

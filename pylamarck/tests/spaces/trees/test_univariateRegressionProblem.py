@@ -1,7 +1,8 @@
 from unittest import TestCase
 from pylamarck.spaces.trees.test_functions_symreg import \
     UnivariateRegressionProblem, SymbolicNode, SymbolicNodeGenerator
-from pylamarck.spaces.trees.production import GrowTree, NodeSingleSwap
+from pylamarck.spaces.trees.production import GrowTree, NodeSingleSwap,\
+    SimplifyingEvaluator
 from pylamarck.termination import MaxSteps
 from pylamarck.algorithms.evolution_strategies import EvolutionStrategy
 import math
@@ -54,3 +55,15 @@ class TestUnivariateRegressionProblem(TestCase):
                                 term=MaxSteps(20))
         expr = es1.solve(unireg)
         self.assertTrue(expr.y < 5.0)
+        evaluator = SimplifyingEvaluator(1.0, 0.5)
+
+        es2 = EvolutionStrategy(mu_param=50,
+                                lambda_param=50,
+                                mode="(mu+lambda)",
+                                nso=nso,
+                                uso=mutation,
+                                term=MaxSteps(20),
+                                evaluator=evaluator)
+
+        expr2 = es1.solve(unireg)
+        self.assertTrue(expr2.y < 5.0)

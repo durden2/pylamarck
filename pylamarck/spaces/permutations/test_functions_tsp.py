@@ -32,7 +32,7 @@ class RandomCities:
         return dist
 
 
-def visualize(pc, orders):
+def visualize(pc, orders, show_plot=True):
 
     coords = [(c.x, c.y) for c in pc._cities]
 
@@ -50,7 +50,9 @@ def visualize(pc, orders):
         plt.text(coords[i][0], coords[i][1], pc._cities[i].name)
 
     plt.legend(loc='lower left')
-    plt.show()
+    if show_plot:
+        plt.show()
+    return plt
 
 
 class SwapElementsMove(TabuMove):
