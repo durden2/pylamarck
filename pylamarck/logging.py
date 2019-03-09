@@ -114,7 +114,7 @@ def goal_val_plot(logs, xtimestep='step', mintoi=True,
 
     ax.set_xlabel(xtimestep)
     if plot_logarithm:
-        ax.set_ylabel('$\log_{10}(f(x)-f_{min}+1)$')
+        ax.set_ylabel('$\\log_{10}(f(x)-f_{min}+1)$')
     else:
         ax.set_ylabel('$f(x)-f_{min}$')
 

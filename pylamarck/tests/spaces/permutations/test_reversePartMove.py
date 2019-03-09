@@ -9,7 +9,7 @@ class TestReversePartMove(TestCase):
         rpm_r = rpm.reverse()
         self.assertEqual(rpm.i, rpm_r.i)
         self.assertEqual(rpm.j, rpm_r.j)
-        
+
         self.assertTrue(rpm.conflicts(rpm))
 
         ind = Individual([0, 1, 2], [0, 1, 2], 0.0)
