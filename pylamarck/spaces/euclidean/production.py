@@ -179,3 +179,19 @@ class DEReproducer(Reproducer):
             offspring.append(new_ind)
 
         return offspring
+
+
+class RandomKeysGPM:
+    """
+    Random Keys genome-phenome mapping
+    """
+    def __init__(self, n, s=None):
+        self.n = n
+        if s is None:
+            self.s = list(range(n))
+        else:
+            self.s = s
+
+    def __call__(self, g):
+        el = sorted(zip(g, self.s), key=lambda x: x[0])
+        return [e[1] for e in el]
