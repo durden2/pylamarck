@@ -99,11 +99,17 @@ class RouletteWheel(Selector):
 
     def __call__(self, population):
         pop_num = len(population)
-        sum_fitness = sum(x.fitness for x in population)
-        if np.isclose(sum_fitness, 0.0):
+        max_fit_p1 = np.nextafter(max(x.fitness for x in population), 1)
+        min_fit_m1 = np.nextafter(min(x.fitness for x in population), -1)
+
+        def scale_fitness(fit):
+            return max(0.0, (max_fit_p1-fit)/(max_fit_p1-min_fit_m1))
+
+        if np.isclose(min_fit_m1, max_fit_p1):
             probabilities = [1.0/pop_num for _ in population]
         else:
-            probabilities = [x.fitness/sum_fitness
+            sum_fitness = sum(scale_fitness(x.fitness) for x in population)
+            probabilities = [scale_fitness(x.fitness)/sum_fitness
                              for x in population]
 
         selected_indices = np.random.choice(range(pop_num),
